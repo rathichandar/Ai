@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandar Rathi — Full-Stack AI Engineer</title>
+<meta name="description" content="Chandar Rathi builds LLM products end-to-end — RAG pipelines, agents, and the infrastructure that ships them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDF6E3; --ink:#111111; --yellow:#FFD43B; --pink:#FF8FAB;
+  --blue:#74C0FC; --green:#74E3B0; --white:#FFFFFF;
+  --border:3px solid var(--ink);
+  --shadow:6px 6px 0 var(--ink);
+  --shadow-sm:4px 4px 0 var(--ink);
+  --display:'Archivo Black',sans-serif;
+  --body:'Space Grotesk',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--pink);color:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+img{max-width:100%}
+
+/* ---------- shared bits ---------- */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;border:2px solid var(--ink);padding:3px 8px;background:var(--white);display:inline-block}
+.section-head{display:flex;align-items:center;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+.section-head h2{font-family:var(--display);font-size:clamp(28px,5vw,44px);letter-spacing:-.5px;text-transform:uppercase}
+.section-head .stamp{font-family:var(--mono);font-size:12px;font-weight:700;border:var(--border);padding:4px 12px;transform:rotate(-3deg)}
+section{padding:72px 0}
+
+.btn{display:inline-block;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;border:var(--border);padding:14px 26px;background:var(--white);box-shadow:var(--shadow);cursor:pointer;transition:transform .08s ease,box-shadow .08s ease;color:var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
+.btn.yellow{background:var(--yellow)}
+.btn.pink{background:var(--pink)}
+.btn.ink{background:var(--ink);color:var(--paper)}
+.btn.ink:hover{color:var(--yellow)}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:200;background:var(--paper);border-bottom:var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1100px;margin:0 auto}
+.logo{font-family:var(--display);font-size:18px;text-decoration:none;border:var(--border);background:var(--yellow);padding:4px 12px;transform:rotate(-2deg);display:inline-block;box-shadow:var(--shadow-sm);transition:transform .3s ease}
+.logo:hover{transform:rotate(358deg)}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nav-links a{font-weight:700;font-size:14px;text-decoration:none;padding:6px 12px;border:2px solid transparent}
+.nav-links a:hover{border:2px solid var(--ink);background:var(--white)}
+.nav-links a.hire{background:var(--ink);color:var(--paper);border:2px solid var(--ink)}
+.nav-links a.hire:hover{background:var(--pink);color:var(--ink)}
+
+/* ---------- hero ---------- */
+.hero{padding:80px 0 64px;position:relative}
+.hero .eyebrow{font-family:var(--mono);font-weight:700;font-size:13px;background:var(--blue);border:var(--border);display:inline-block;padding:4px 12px;transform:rotate(-2deg);box-shadow:var(--shadow-sm);margin-bottom:22px}
+.hero h1{font-family:var(--display);font-size:clamp(40px,8.5vw,92px);line-height:1.0;letter-spacing:-1px;text-transform:uppercase;max-width:900px}
+.hero h1 .hl{background:var(--pink);border:var(--border);padding:0 12px;display:inline-block;transform:rotate(1.5deg);box-shadow:var(--shadow-sm)}
+.hero h1 .hl2{background:var(--yellow);border:var(--border);padding:0 12px;display:inline-block;transform:rotate(-1.5deg);box-shadow:var(--shadow-sm)}
+.hero p.sub{font-size:clamp(15px,2vw,19px);max-width:620px;margin:26px 0 34px;font-weight:500}
+.hero .cta-row{display:flex;gap:16px;flex-wrap:wrap}
+.stickers{position:absolute;right:20px;top:60px;display:flex;flex-direction:column;gap:14px}
+.sticker{font-family:var(--mono);font-weight:700;font-size:12px;border:var(--border);padding:8px 14px;background:var(--white);box-shadow:var(--shadow-sm);transform:rotate(4deg);transition:transform .2s ease;cursor:default}
+.sticker:nth-child(2){transform:rotate(-5deg);background:var(--green)}
+.sticker:nth-child(3){transform:rotate(2deg);background:var(--yellow)}
+.sticker:hover{transform:rotate(0) scale(1.08)}
+@media(max-width:900px){.stickers{position:static;flex-direction:row;flex-wrap:wrap;margin-top:30px}}
+
+/* ---------- marquee ---------- */
+.marquee{background:var(--ink);border-top:var(--border);border-bottom:var(--border);overflow:hidden;padding:12px 0}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:scroll 22s linear infinite;width:max-content}
+.marquee span{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:2px;color:var(--yellow);padding-right:24px}
+.marquee span:nth-child(even){color:var(--pink)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- stats ---------- */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.stat{border:var(--border);background:var(--white);padding:22px;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease}
+.stat:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.stat:nth-child(1){background:var(--yellow);transform:rotate(-1deg)}
+.stat:nth-child(2){background:var(--white);transform:rotate(.7deg)}
+.stat:nth-child(3){background:var(--pink);transform:rotate(-.7deg)}
+.stat:nth-child(4){background:var(--blue);transform:rotate(1deg)}
+.stat .num{font-family:var(--display);font-size:clamp(30px,4vw,42px);line-height:1.1}
+.stat .lbl{font-family:var(--mono);font-size:12px;font-weight:700;margin-top:8px;line-height:1.5}
+
+/* ---------- experience ---------- */
+.xp-card{border:var(--border);background:var(--white);box-shadow:var(--shadow);padding:28px;margin-bottom:28px}
+.xp-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.xp-top h3{font-family:var(--display);font-size:clamp(20px,3vw,28px);text-transform:uppercase}
+.xp-top .when{font-family:var(--mono);font-weight:700;font-size:12px;background:var(--yellow);border:2px solid var(--ink);padding:3px 10px;transform:rotate(-2deg)}
+.xp-role{font-weight:700;font-size:15px;margin-bottom:14px}
+.xp-card ul{list-style:none}
+.xp-card li{padding-left:26px;position:relative;margin-bottom:10px;font-size:15px}
+.xp-card li::before{content:"▶";position:absolute;left:0;font-size:11px;top:5px}
+.xp-card li b{background:var(--green);padding:0 4px;border:1.5px solid var(--ink)}
+
+/* ---------- projects (draggable desk) ---------- */
+.desk-hint{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--white);border:2px dashed var(--ink);padding:6px 12px;display:inline-block;margin-bottom:24px}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;position:relative}
+.proj{border:var(--border);background:var(--white);box-shadow:var(--shadow);padding:22px;position:relative;touch-action:pan-y}
+.proj.draggable{cursor:grab}
+.proj.dragging{cursor:grabbing;z-index:100;box-shadow:12px 12px 0 var(--ink)}
+.proj:nth-child(1){transform:rotate(-.8deg)}
+.proj:nth-child(2){transform:rotate(.9deg)}
+.proj:nth-child(3){transform:rotate(.6deg)}
+.proj:nth-child(4){transform:rotate(-.6deg)}
+.proj .p-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}
+.proj h3{font-family:var(--display);font-size:19px;text-transform:uppercase;line-height:1.2}
+.proj .grip{font-family:var(--mono);font-size:14px;letter-spacing:2px;color:#999;user-select:none}
+.proj .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.proj .tags .tag{font-size:10px}
+.proj .tags .tag:nth-child(odd){background:var(--blue)}
+.proj .tags .tag:nth-child(even){background:var(--yellow)}
+.proj p{font-size:14px;margin-bottom:10px}
+.proj .win{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--green);border:2px solid var(--ink);padding:6px 10px;display:inline-block;transform:rotate(-1deg)}
+.proj-reset{margin-top:26px;display:none}
+.proj-reset.show{display:inline-block}
+
+/* ---------- skills ---------- */
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
+.skill-box{border:var(--border);background:var(--white);box-shadow:var(--shadow);padding:20px}
+.skill-box h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:14px;background:var(--ink);color:var(--paper);display:inline-block;padding:3px 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:11.5px;font-weight:700;border:2px solid var(--ink);padding:4px 9px;background:var(--paper);transition:transform .1s ease,background .1s ease;cursor:default}
+.chip:hover{transform:rotate(-2deg) scale(1.07);background:var(--pink)}
+
+/* ---------- downloads ---------- */
+#downloads{background:var(--yellow);border-top:var(--border);border-bottom:var(--border)}
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
+.dl-card{border:var(--border);background:var(--white);box-shadow:var(--shadow);padding:26px;text-align:left}
+.dl-card .doc{font-family:var(--display);font-size:40px;line-height:1;margin-bottom:12px}
+.dl-card h3{font-family:var(--display);font-size:22px;text-transform:uppercase;margin-bottom:6px}
+.dl-card p{font-size:14px;margin-bottom:18px}
+.dl-note{font-family:var(--mono);font-size:12px;font-weight:700;margin-top:24px;background:var(--white);border:2px dashed var(--ink);padding:8px 14px;display:inline-block}
+
+/* ---------- contact / footer ---------- */
+footer{padding:80px 0 40px}
+footer .big-mail{font-family:var(--display);font-size:clamp(22px,5vw,52px);text-transform:lowercase;text-decoration:none;display:inline-block;border-bottom:5px solid var(--ink);word-break:break-all}
+footer .big-mail:hover{background:var(--pink)}
+.foot-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:40px;align-items:flex-start}
+.foot-links{display:flex;gap:12px;flex-wrap:wrap}
+.edu{font-family:var(--mono);font-size:12px;line-height:1.8;max-width:420px}
+.credit{margin-top:50px;font-family:var(--mono);font-size:11px;text-align:center;opacity:.7}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  .marquee-track{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .btn,.stat,.chip,.sticker,.logo{transition:none}
+}
+@media(max-width:600px){
+  section{padding:52px 0}
+  .hero{padding:52px 0 44px}
+  .nav-links a{font-size:13px;padding:5px 8px}
+  .xp-card,.proj,.skill-box,.dl-card{box-shadow:var(--shadow-sm)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#top" aria-label="Chandar Rathi — home">CR</a>
+    <div class="nav-links">
+      <a href="#work">work</a>
+      <a href="#projects">projects</a>
+      <a href="#downloads">résumé</a>
+      <a href="#contact" class="hire">say hi</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="eyebrow">FULL-STACK AI ENGINEER · 4+ YRS</span>
+  <h1>I BUILD AI THAT <span class="hl">ACTUALLY</span> SHIPS —<br>FROM FIRST PROMPT TO <span class="hl2">PROD</span>.</h1>
+  <p class="sub">Hi, I'm <b>Chandar Rathi</b>. I take LLM products end-to-end — RAG pipelines, agents, evals, and the cloud infrastructure that keeps them fast, cheap, and safe under real production SLAs.</p>
+  <div class="cta-row">
+    <a class="btn yellow" href="#projects">See the projects ↓</a>
+    <a class="btn ink" href="Chandar_Rathi_Resume.pdf" download>Download résumé</a>
+  </div>
+  <div class="stickers" aria-hidden="true">
+    <span class="sticker">RAG ✦ AGENTS ✦ EVALS</span>
+    <span class="sticker">OPEN TO WORK</span>
+    <span class="sticker">AWS · GCP · K8S</span>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>✦ LANGGRAPH</span><span>✦ RAG</span><span>✦ KUBERNETES</span><span>✦ PYTHON</span><span>✦ PGVECTOR</span><span>✦ FASTAPI</span><span>✦ REACT</span><span>✦ TERRAFORM</span><span>✦ MCP</span><span>✦ VLLM</span>
+    <span>✦ LANGGRAPH</span><span>✦ RAG</span><span>✦ KUBERNETES</span><span>✦ PYTHON</span><span>✦ PGVECTOR</span><span>✦ FASTAPI</span><span>✦ REACT</span><span>✦ TERRAFORM</span><span>✦ MCP</span><span>✦ VLLM</span>
+  </div>
+</div>
+
+<section class="wrap reveal" id="numbers" aria-label="Key results">
+  <div class="stats-grid">
+    <div class="stat"><div class="num">-40%</div><div class="lbl">INFERENCE COST via multi-provider LLM routing + caching</div></div>
+    <div class="stat"><div class="num">+27%</div><div class="lbl">ANSWER RELEVANCE with hybrid retrieval + reranking</div></div>
+    <div class="stat"><div class="num">0.89</div><div class="lbl">NDCG@5 — up from 0.64 on a 500-question eval set</div></div>
+    <div class="stat"><div class="num">15m→60s</div><div class="lbl">WORKFLOW TIME after agent automation</div></div>
+  </div>
+</section>
+
+<section class="wrap reveal" id="work">
+  <div class="section-head">
+    <h2>Where I've shipped</h2>
+    <span class="stamp">EXPERIENCE</span>
+  </div>
+
+  <article class="xp-card">
+    <div class="xp-top">
+      <h3>Citi</h3>
+      <span class="when">MAR 2025 — PRESENT · USA</span>
+    </div>
+    <p class="xp-role">Full Stack AI Engineer</p>
+    <ul>
+      <li>Built a production RAG assistant so relationship managers stop digging through dense policy docs — <b>+27% answer relevance</b> via semantic chunking and hybrid BM25 + vector retrieval with cross-encoder reranking over pgvector.</li>
+      <li>Owned retrieval and serving: agentic workflows in LangGraph with tool-calling and guardrails so the assistant completes multi-step servicing tasks safely and auditably.</li>
+      <li>Cut inference cost <b>40%</b> by routing across OpenAI, Anthropic, and Bedrock by query complexity — with fallback, prompt caching, and autoscaled Kubernetes serving.</li>
+      <li>Wired a Ragas / LangSmith eval harness into CI scoring faithfulness, context relevance, and recall on every deploy, with OpenTelemetry tracing.</li>
+      <li>Hardened for a regulated environment: prompt-injection defense, PII redaction, structured-output schemas, and IAM/VPC/secrets controls in the request path.</li>
+    </ul>
+  </article>
+
+  <article class="xp-card">
+    <div class="xp-top">
+      <h3>HCL</h3>
+      <span class="when">AUG 2022 — DEC 2023 · INDIA</span>
+    </div>
+    <p class="xp-role">Software Engineer</p>
+    <ul>
+      <li>Rebuilt enterprise front ends in React and Node/Express around reusable components — <b>25% faster page loads</b> and better engagement.</li>
+      <li>Designed REST and GraphQL APIs over MongoDB and PostgreSQL with caching and query tuning for data-heavy, real-time features.</li>
+      <li>Containerized services with Docker and Kubernetes; automated CI/CD with Jenkins, GitHub Actions, and Terraform — <b>35% fewer failed deploys</b>.</li>
+      <li>Managed AWS (EC2, S3, RDS) with Prometheus, Grafana, and CloudWatch monitoring to keep production stable.</li>
+    </ul>
+  </article>
+</section>
+
+<section class="wrap reveal" id="projects">
+  <div class="section-head">
+    <h2>The desk</h2>
+    <span class="stamp">PROJECTS</span>
+  </div>
+  <span class="desk-hint" id="deskHint">↯ these cards are physically draggable — go on, make a mess</span>
+
+  <div class="projects-grid" id="desk">
+    <article class="proj">
+      <div class="p-head"><h3>RAG Ops</h3><span class="grip" aria-hidden="true">⠿</span></div>
+      <div class="tags"><span class="tag">LANGCHAIN</span><span class="tag">PGVECTOR</span><span class="tag">FASTAPI</span><span class="tag">REACT</span></div>
+      <p>Open-sourced, from-scratch RAG assistant built to benchmark retrieval strategies — a reproducible naive vs. hybrid-plus-reranking comparison, with a streaming Next.js UI and a Ragas dashboard exposing faithfulness and recall per query.</p>
+      <p>Serves quantized Llama 3 / Mistral on a single GPU with vLLM — near-zero per-query cost, P95 under 800 ms.</p>
+      <span class="win">NDCG@5: 0.64 → 0.89</span>
+    </article>
+
+    <article class="proj">
+      <div class="p-head"><h3>AskOps</h3><span class="grip" aria-hidden="true">⠿</span></div>
+      <div class="tags"><span class="tag">LANGGRAPH</span><span class="tag">MCP</span><span class="tag">MULTI-LLM</span><span class="tag">K8S</span></div>
+      <p>Tool-calling agent that resolves multi-step tasks from natural language across internal APIs, docs, and tickets. Scoped tools and human-in-the-loop on irreversible actions — so it acts without acting unsafely.</p>
+      <p>Runs with provider fallback, prompt caching, autoscaled serving, and full LangSmith tracing.</p>
+      <span class="win">15 min workflow → under 60 s</span>
+    </article>
+
+    <article class="proj">
+      <div class="p-head"><h3>SLM Fine-Tuning Pipeline</h3><span class="grip" aria-hidden="true">⠿</span></div>
+      <div class="tags"><span class="tag">QLORA</span><span class="tag">LLAMA 3 8B</span><span class="tag">VLLM</span><span class="tag">FASTAPI</span></div>
+      <p>Fine-tuned Llama 3 8B with QLoRA to match a GPT-4-class model on a narrow domain task at a fraction of the cost — reproducible on a single 24 GB consumer GPU via 4-bit quantization and LoRA adapters.</p>
+      <p>Full dataset-prep → train → eval → deploy pipeline, documented behind a FastAPI endpoint and Gradio demo.</p>
+      <span class="win">Task accuracy: 71% → 89%</span>
+    </article>
+
+    <article class="proj">
+      <div class="p-head"><h3>LLM Observability Platform</h3><span class="grip" aria-hidden="true">⠿</span></div>
+      <div class="tags"><span class="tag">OTEL</span><span class="tag">CLICKHOUSE</span><span class="tag">GRAFANA</span><span class="tag">FASTAPI</span></div>
+      <p>Self-hostable tracing for AI apps — every LLM request end to end: prompt, retrieved context, tool calls, tokens, latency, cost. Traces land in ClickHouse; per-route cost and latency surface in Grafana with drift alerts.</p>
+      <p>Ships as drop-in middleware that instruments any LangChain or LangGraph app in a few lines.</p>
+      <span class="win">Debug + budget AI, not guess</span>
+    </article>
+  </div>
+  <button class="btn proj-reset" id="deskReset">Tidy the desk ↺</button>
+</section>
+
+<section class="wrap reveal" id="skills">
+  <div class="section-head">
+    <h2>The toolbox</h2>
+    <span class="stamp">SKILLS</span>
+  </div>
+  <div class="skill-groups">
+    <div class="skill-box">
+      <h3>AI / LLM</h3>
+      <div class="chips">
+        <span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">RAG</span><span class="chip">hybrid retrieval</span><span class="chip">reranking</span><span class="chip">pgvector</span><span class="chip">FAISS</span><span class="chip">tool-calling</span><span class="chip">MCP</span><span class="chip">guardrails</span><span class="chip">Ragas</span><span class="chip">LangSmith</span><span class="chip">vLLM</span><span class="chip">QLoRA</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h3>CLOUD / DEVOPS</h3>
+      <div class="chips">
+        <span class="chip">AWS</span><span class="chip">GCP</span><span class="chip">Azure</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Helm</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">OpenTelemetry</span><span class="chip">Datadog</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h3>APP / DATA</h3>
+      <div class="chips">
+        <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Node.js</span><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">GraphQL</span><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span><span class="chip">Redis</span><span class="chip">DynamoDB</span><span class="chip">ClickHouse</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h3>SECURITY</h3>
+      <div class="chips">
+        <span class="chip">IAM / VPC</span><span class="chip">OAuth2 / JWT</span><span class="chip">PII redaction</span><span class="chip">prompt-injection defense</span><span class="chip">Secrets Manager</span><span class="chip">SSL/TLS</span><span class="chip">vulnerability scanning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="downloads">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Take the paperwork</h2>
+      <span class="stamp">DOWNLOADS</span>
+    </div>
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div class="doc" aria-hidden="true">📄</div>
+        <h3>Résumé</h3>
+        <p>Everything above, one tidy PDF. ATS-friendly, recruiter-approved, zero rotated stickers.</p>
+        <a class="btn pink" href="Chandar_Rathi_Resume.pdf" download>Download résumé ↓</a>
+      </div>
+      <div class="dl-card">
+        <div class="doc" aria-hidden="true">✉️</div>
+        <h3>Cover letter</h3>
+        <p>The why behind the what — who I am, how I work, and what I'm looking for next.</p>
+        <a class="btn" href="Chandar_Rathi_Cover_Letter.pdf" download>Download cover letter ↓</a>
+      </div>
+    </div>
+    <span class="dl-note">Prefer email? Both land in your inbox — just ask below ↓</span>
+  </div>
+</section>
+
+<footer class="wrap reveal" id="contact">
+  <span class="tag" style="background:var(--green);transform:rotate(-2deg);margin-bottom:20px">CURRENTLY OPEN TO WORK</span>
+  <h2 style="font-family:var(--display);font-size:clamp(26px,5vw,44px);text-transform:uppercase;margin:14px 0 18px">Let's build something.</h2>
+  <a class="big-mail" href="mailto:chandarrathi07@gmail.com">chandarrathi07@gmail.com</a>
+  <div class="foot-row">
+    <div class="foot-links">
+      <a class="btn" href="tel:+15624557838">☎ +1 (562) 455-7838</a>
+      <a class="btn blue" style="background:var(--blue)" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn yellow" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+    <div class="edu">
+      <b>EDUCATION</b><br>
+      MS Computer Science — California State University (GPA 3.7/4)<br>
+      BE Computer Science — Gujarat Technological University (GPA 8.9/10)
+    </div>
+  </div>
+  <p class="credit">© 2026 Chandar Rathi · hand-built, no template harmed · drag responsibly</p>
+</footer>
+
+<script>
+(function(){
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.12});
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  var canDrag = window.matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth > 760;
+  var hint = document.getElementById('deskHint');
+  var resetBtn = document.getElementById('deskReset');
+  var cards = document.querySelectorAll('.proj');
+
+  if(!canDrag){
+    if(hint) hint.textContent = '✦ four things I built and ran for real';
+    return;
+  }
+
+  var moved = false;
+  cards.forEach(function(card){
+    card.classList.add('draggable');
+    var dx = 0, dy = 0, startX = 0, startY = 0, baseX = 0, baseY = 0, dragging = false;
+
+    card.addEventListener('pointerdown', function(ev){
+      if(ev.target.closest('a,button')) return;
+      dragging = true;
+      startX = ev.clientX; startY = ev.clientY;
+      baseX = dx; baseY = dy;
+      card.classList.add('dragging');
+      card.setPointerCapture(ev.pointerId);
+      ev.preventDefault();
+    });
+    card.addEventListener('pointermove', function(ev){
+      if(!dragging) return;
+      dx = baseX + (ev.clientX - startX);
+      dy = baseY + (ev.clientY - startY);
+      card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + (dx * 0.01) + 'deg)';
+      if(!moved && (Math.abs(dx) > 30 || Math.abs(dy) > 30)){
+        moved = true;
+        if(resetBtn) resetBtn.classList.add('show');
+      }
+    });
+    function drop(){
+      if(!dragging) return;
+      dragging = false;
+      card.classList.remove('dragging');
+    }
+    card.addEventListener('pointerup', drop);
+    card.addEventListener('pointercancel', drop);
+    card._reset = function(){
+      dx = 0; dy = 0;
+      card.style.transition = 'transform .35s ease';
+      card.style.transform = '';
+      setTimeout(function(){ card.style.transition = ''; }, 400);
+    };
+  });
+
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      cards.forEach(function(c){ if(c._reset) c._reset(); });
+      resetBtn.classList.remove('show');
+      moved = false;
+    });
+  }
+})();
+</script>
+</body>
+</html>
